@@ -135,12 +135,12 @@ const CRMDashboard = () => {
 
   const [columns, setColumns] = useState([
     { key: "name", label: "Name", visible: true, width: 240 },
-    { key: "addedFrom", label: "Added from", visible: true, width: 120 },
+    { key: "addedFrom", label: "Added from", visible: true, width: 180 },
     { key: "tags", label: "Tags", visible: true, width: 100 },
-    { key: "internalId", label: "Internal Id", visible: true, width: 120 },
-    { key: "clientId", label: "Client Id", visible: true, width: 100 },
+    { key: "internalId", label: "Internal Id", visible: true, width: 140 },
+    { key: "clientId", label: "Client Id", visible: true, width: 140 },
     { key: "phone", label: "Phone", visible: true, width: 140 },
-    { key: "clientPortal", label: "Client Portal", visible: true, width: 130 },
+    { key: "clientPortal", label: "Client Portal", visible: true, width: 180 },
     { key: "assignee", label: "Assignee", visible: true, width: 180 },
   ]);
 
@@ -151,7 +151,6 @@ const CRMDashboard = () => {
   const [showAddColumnMenu, setShowAddColumnMenu] = useState(false);
   const editInputRef = useRef(null);
 
-  // Photo mapping for consistent user images
   const userPhotos = {
     "Nisha Giri Puri":
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYq5Q5vtPMetbB77I30rhC80N8CVw37d8CFg&s",
@@ -190,12 +189,10 @@ const CRMDashboard = () => {
   const visibleColumns = columns.filter((col) => col.visible);
   const hiddenColumns = columns.filter((col) => !col.visible);
 
-  // Single-click selection (Requirement 4)
   const handleCellClick = (rowId, columnKey) => {
     setSelectedCell({ rowId, columnKey });
   };
 
-  // Double-click to edit (Requirement 4)
   const handleCellDoubleClick = (rowId, columnKey) => {
     const client = clients.find((c) => c.id === rowId);
     if (client) {
@@ -218,7 +215,6 @@ const CRMDashboard = () => {
     }
   };
 
-  // Tab navigation (Requirement 5)
   const handleKeyDown = (e, rowId, columnKey) => {
     if (e.key === "Enter") {
       handleEditSubmit();
@@ -240,7 +236,6 @@ const CRMDashboard = () => {
     }
   };
 
-  // Add new record at bottom (Requirement 3)
   const addNewClient = () => {
     const newId = Math.max(...clients.map((c) => c.id)) + 1;
     const newClient = {
@@ -259,7 +254,6 @@ const CRMDashboard = () => {
     setClients((prev) => [...prev, newClient]);
   };
 
-  // Hide column functionality (Requirement 6)
   const hideColumn = (columnKey) => {
     setColumns((prev) =>
       prev.map((col) =>
@@ -269,7 +263,6 @@ const CRMDashboard = () => {
     setShowColumnMenu(null);
   };
 
-  // Show hidden column (Requirement 7)
   const showColumn = (columnKey) => {
     setColumns((prev) =>
       prev.map((col) =>
@@ -313,7 +306,6 @@ const CRMDashboard = () => {
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
-      {/* Header - Fixed at top */}
       <header className="bg-white border-b border-gray-200 px-6 py-3 h-16 flex items-center flex-shrink-0">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-3">
@@ -343,10 +335,8 @@ const CRMDashboard = () => {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - Fixed height */}
         <aside className="w-60 bg-white border-r border-gray-200 h-screen overflow-y-auto flex-shrink-0">
           <div className="p-4">
-            {/* CRM Header with chevron */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <span className="text-sm font-medium text-gray-900">CRM</span>
@@ -357,7 +347,6 @@ const CRMDashboard = () => {
               </button>
             </div>
 
-            {/* Search */}
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
@@ -368,7 +357,6 @@ const CRMDashboard = () => {
               <MoreHorizontal className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             </div>
 
-            {/* Navigation Menu */}
             <nav className="space-y-1">
               {[
                 { name: "Dashboard", icon: Home, active: false },
@@ -397,9 +385,7 @@ const CRMDashboard = () => {
           </div>
         </aside>
 
-        {/* Main Content - Fixed height to prevent outer scrolling */}
         <main className="flex-1 h-screen overflow-hidden">
-          {/* Page Header */}
           <div className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -415,7 +401,6 @@ const CRMDashboard = () => {
           </div>
 
           <div className="p-6 h-full overflow-y-auto">
-            {/* Filters Row */}
             <div className="flex items-center space-x-3 mb-6 flex-shrink-0">
               <div className="relative flex-1 max-w-xs">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -464,7 +449,6 @@ const CRMDashboard = () => {
               </button>
             </div>
 
-            {/* Action Bar */}
             <div className="flex items-center justify-between mb-4 flex-shrink-0">
               <button
                 onClick={addNewClient}
@@ -484,7 +468,6 @@ const CRMDashboard = () => {
               </div>
             </div>
 
-            {/* Table - Fixed scrolling to be ONLY within table */}
             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
               <div className="overflow-x-auto overflow-y-auto max-h-[500px] min-h-[400px]">
                 <table className="w-full min-w-[1200px]">
@@ -503,12 +486,9 @@ const CRMDashboard = () => {
                           style={{ minWidth: column.width }}
                         >
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-1">
                               <span>{column.label}</span>
-                              <div className="flex flex-col">
-                                <ArrowUp className="w-3 h-3 text-gray-400 -mb-1" />
-                                <ArrowDown className="w-3 h-3 text-gray-400" />
-                              </div>
+                              <ArrowUpDown className="w-3 h-3 text-gray-400" />
                             </div>
                             <div className="relative">
                               <button
@@ -696,7 +676,6 @@ const CRMDashboard = () => {
                 </table>
               </div>
 
-              {/* Footer */}
               <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
                 <button className="text-blue-600 text-sm hover:text-blue-800 font-medium">
                   + Add Client's details
